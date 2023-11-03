@@ -1,7 +1,7 @@
 from flask import render_template
 
-def login():
+def login_view():
     return render_template('auth/login.html')
 
-def register():
+def register_view():
     return render_template('auth/register.html')

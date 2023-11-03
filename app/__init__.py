@@ -1,9 +1,16 @@
 from flask import Flask
-from app.controllers.auth import auth_blueprint
+from flask_cors import CORS
+from app.extensions import db, migrate
 
-app = Flask(__name__)
+def create_app(config_class):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    
+    db.init_app(app)
+    migrate.init_app(app, db)
+    
+    from app.controllers import auth
+    app.register_blueprint(auth.auth_blueprint)
 
-# Register Blueprints
-app.register_blueprint(example_blueprint)
 
-# More app configuration can go here
+    return app
